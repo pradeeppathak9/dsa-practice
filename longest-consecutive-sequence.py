@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/longest-consecutive-sequence/submissions/
+# https://leetcode.com/problems/longest-consecutive-sequence/
 
 def solution(nums):
     num_set = set(nums)
