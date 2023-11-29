@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/network-delay-time/
+# Dijksta Algorithm on Directed Graphs (BFS)
 
 def solution(n, edges, src=0):
     graph = {}
