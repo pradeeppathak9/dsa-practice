@@ -5,26 +5,28 @@ def solution(numCourses, prerequisites):
     graph = { i: [] for i in range(numCourses) }
     for u, v in prerequisites:
         graph[u].append(v)
+
     res = []
     visited = set()
-    
+    path = set()
+
     def dfs(u):
-        if u in visited:
-            return False
-        visited.add(u)
+        if u in path: return False
+        if u in visited: return True
+
+        path.add(u)
         for v in graph[u]:
             if not dfs(v):
                 return False
-        if u not in res:
-            res.append(u)
-        visited.remove(u)
-        graph[u] = []
+        path.remove(u)
+
+        visited.add(u)
+        res.append(u)
         return True
 
     for i in range(numCourses):
-        if i not in res:
-            if not dfs(i):
-                return []
+        if not dfs(i):
+            return []
     return res 
 
 numCourses = 2
