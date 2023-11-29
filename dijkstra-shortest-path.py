@@ -1,4 +1,5 @@
 # Dijkstra's Algorithm for Shortest Path in a directed edge
+import heapq
 
 def solution(n, edges, src=0):
     graph = {}
