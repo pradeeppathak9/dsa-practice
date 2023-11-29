@@ -1,4 +1,5 @@
 # https://leetcode.com/problems/number-of-islands/
+# DFS
 
 def solution(grid):
     m, n = len(grid), len(grid[0])
