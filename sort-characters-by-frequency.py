@@ -1,21 +1,16 @@
 # https://leetcode.com/problems/sort-characters-by-frequency/
 
-
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 def solution(s):
-    count = defaultdict(int)
-    for c in s:
-        count[c] += 1
-        
-    freq_count = defaultdict(set)
+    count = Counter(s)
+    bucket = defaultdict(set)
     for k, v in count.items():
-        freq_count[v].add(k)
+        bucket[v].add(k)
         
-    
     res = ''
     for freq in range(len(s), 0, -1):
-        for c in freq_count[freq]:
+        for c in bucket[freq]:
             for j in range(freq):
                 res += c
     return res
