@@ -1,6 +1,3 @@
-# https://leetcode.com/problems/path-sum-ii/
-
-
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -10,19 +7,18 @@
 
 def solution(root, targetSum):
     ans = []
-    memo = {}
     def dfs(root, targetSum, path):
         if root == None: 
             return
+        path.append(root.val)
         if root.left == None and root.right == None:
             # leaf node
             if targetSum == root.val:
-                ans.append(path + [root.val])
-            return 
-            
-        dfs(root.left, targetSum - root.val, path + [ root.val ])
-        dfs(root.right, targetSum - root.val, path + [ root.val ]) 
-        
+                ans.append(path.copy())    
+        dfs(root.left, targetSum - root.val, path)
+        dfs(root.right, targetSum - root.val, path) 
+        path.pop()
+
     dfs(root, targetSum, [])
     return ans
 
