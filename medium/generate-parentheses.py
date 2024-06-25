@@ -1,3 +1,5 @@
+# https://leetcode.com/problems/generate-parentheses/
+
 def solution(n, open_braces = 0, s='', result=[]):
     #     print(n, open_braces, s)
     if n < 0 or open_braces < 0:
