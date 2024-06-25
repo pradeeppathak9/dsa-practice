@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/sum-root-to-leaf-numbers/submissions/
+# https://leetcode.com/problems/sum-root-to-leaf-numbers/
 
 # Definition for a binary tree node.
 # class TreeNode:
