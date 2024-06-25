@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/course-schedule/submissions/
+# https://leetcode.com/problems/course-schedule/
 # Topoplogical sort (DFS)
 
 def solution(numCourses, prerequisites):
