@@ -13,4 +13,5 @@ def solution(prices):
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         return solution(prices)
-        
+
+
