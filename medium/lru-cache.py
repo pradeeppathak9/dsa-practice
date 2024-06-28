@@ -4,67 +4,83 @@ class Node:
     def __init__(self, key, value):
         self.key = key
         self.value = value
-        self.next = None
+        self.freq = 1
         self.prev = None
+        self.next = None
 
-class LRUCache:
-
-    def __init__(self, capacity: int):
-        self.capacity = capacity
-        self.key_node_mapping = {}
+class DLL:
+    def __init__(self):
         self.head = Node(None, None)
         self.tail = Node(None, None)
         self.head.next = self.tail
         self.tail.prev = self.head
+        self.size = 0
 
-    def add_node_to_front(self, node):
+    def insert_head(self, node):
         node.next = self.head.next
         node.prev = self.head
         self.head.next.prev = node
         self.head.next = node
-        return
-
-    def delete_node(self, node):
-        node.prev.next = node.next
+        self.size += 1
+    
+    def remove_node(self, node):
         node.next.prev = node.prev
-        node.next = node.prev = None
-        return 
+        node.prev.next = node.next
+        self.size -= 1
+
+    def remove_tail(self):
+        tail = self.tail.prev
+        self.remove_node(tail)
+        return tail
+
+    def __str__(self):
+        node = self.head.next
+        res = []
+        while node != self.tail:
+            res.append(f'{node.key, node.value}')
+            node = node.next
+        return ' -> '.join(res)
+
+class LRUCache:
+    
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}
+        self.dll = DLL()
 
     def get(self, key: int) -> int:
-        if key in self.key_node_mapping:
-            node = self.key_node_mapping[key]
-            self.delete_node(node)
-            self.add_node_to_front(node)
+        if key in self.cache:
+            node = self.cache[key]
+            self.dll.remove_node(node)
+            self.dll.insert_head(node)
+            # print(f"get - {key} - {self.dll}")
             return node.value
         else:
             return -1
-        # self.chache_status()
   
     def put(self, key: int, value: int) -> None:
-        if key in self.key_node_mapping:
-            node = self.key_node_mapping[key]
+        if key in self.cache:
+            node = self.cache[key]
             node.value = value
-            del self.key_node_mapping[key]
-            self.delete_node(node)
+            del self.cache[key]
+            self.dll.remove_node(node)
         else:
             node = Node(key, value)
 
-        if self.capacity == len(self.key_node_mapping):
-            del self.key_node_mapping[self.tail.prev.key]
-            self.delete_node(self.tail.prev)
+        if self.capacity == len(self.cache):
+            del self.cache[self.dll.tail.prev.key]
+            self.dll.remove_node(self.dll.tail.prev)
 
-        self.add_node_to_front(node)
-        self.key_node_mapping[key] = node
-        # self.chache_status()
+        self.dll.insert_head(node)
+        self.cache[key] = node
+        # print(f"put - {key} - {self.dll}")
         return
 
-    def chache_status(self):
-            trav = self.head.next
-            res = []
-            while trav != self.tail:
-                res.append((trav.key, trav.value))
-                trav = trav.next
-            print(res, self.key_node_mapping.keys())
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
 
 
 
