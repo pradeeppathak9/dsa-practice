@@ -1,6 +1,8 @@
 # https://leetcode.com/problems/lfu-cache/
 
+
 class Node:
+
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -10,8 +12,8 @@ class Node:
 
 class DLL:
     def __init__(self):
-        self.head = Node(None, None)
-        self.tail = Node(None, None)
+        self.head = Node(0, 0)
+        self.tail = Node(0, 0)
         self.head.next = self.tail
         self.tail.prev = self.head
         self.size = 0
@@ -33,51 +35,51 @@ class DLL:
         self.remove_node(tail)
         return tail
 
-    def __str__(self):
-        node = self.head.next
-        res = []
-        while node != self.tail:
-            res.append(f'{node.key, node.value}')
-            node = node.next
-        return ' -> '.join(res)
+import collections 
 
-class LRUCache:
+class LFUCache:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.cache = {}
-        self.dll = DLL()
+        self.freq_table = collections.defaultdict(DLL)
+        self.min_freq = 0
 
     def get(self, key: int) -> int:
-        if key in self.cache:
-            node = self.cache[key]
-            self.dll.remove_node(node)
-            self.dll.insert_head(node)
-            print(f"get - {key} - {self.dll}")
-            return node.value
-        else:
-            return -1
-  
+        if key in self.cache: 
+            return self.update_cache(self.cache[key], key, self.cache[key].value)
+        return -1
+
     def put(self, key: int, value: int) -> None:
-        if key in self.cache:
-            node = self.cache[key]
-            node.value = value
-            del self.cache[key]
-            self.dll.remove_node(node)
+        if not self.capacity:
+            return
+        if key in self.cache: 
+            self.update_cache(self.cache[key], key, value)
         else:
+            if len(self.cache) == self.capacity:
+                # print(self.cache, self.min_freq)
+                prev_tail = self.freq_table[self.min_freq].remove_tail()
+                del self.cache[prev_tail.key]
             node = Node(key, value)
+            self.freq_table[1].insert_head(node)
+            self.cache[key] = node
+            self.min_freq = 1
 
-        if self.capacity == len(self.cache):
-            del self.cache[self.dll.tail.prev.key]
-            self.dll.remove_node(self.dll.tail.prev)
+    def update_cache(self, node, key, value):
+        node = self.cache[key]
+        node.value = value
+        prev_freq = node.freq
+        node.freq += 1
+        self.freq_table[prev_freq].remove_node(node)
+        self.freq_table[node.freq].insert_head(node)
 
-        self.dll.insert_head(node)
-        self.cache[key] = node
-        print(f"put - {key} - {self.dll}")
-        return
+        if prev_freq == self.min_freq and self.freq_table[prev_freq].size == 0:
+            self.min_freq += 1
+        return node.value 
+        
 
 
-# Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache(capacity)
+# Your LFUCache object will be instantiated and called as such:
+# obj = LFUCache(capacity)
 # param_1 = obj.get(key)
 # obj.put(key,value)
