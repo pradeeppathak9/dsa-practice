@@ -43,7 +43,8 @@ class Router:
             if result:
                  return 
             if len(path) == 0 and 'result' in node: 
-                    result = node['result']
+                result = node['result']
+                return
             else:
                 if path[0] in node:
                     dfs(node[path[0]], path[1:])
