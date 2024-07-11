@@ -26,7 +26,7 @@ Router.addRoute("/bar/foo/abc", "result foo")
 class Router: 
     def __init__(self):
         self.path_mapping = {} 
-        
+
     def addRoute(self, path, result):
         node = self.path_mapping
         for pattern in path.split('/'):
@@ -39,11 +39,10 @@ class Router:
     def callRoute(self, path):
         result = None
         def dfs(node, path):
-            if len(path) == 0:
-                nonlocal result
-                if result is not None: 
-                    return
-                if 'result' in node: 
+            nonlocal result
+            if result:
+                 return 
+            if len(path) == 0 and 'result' in node: 
                     result = node['result']
             else:
                 if path[0] in node:
@@ -52,9 +51,7 @@ class Router:
                     dfs(node['*'], path[1:])
         
         dfs(self.path_mapping, path.split('/'))
-        if result:
-            return result
-        raise Exception(f"Requested Path '{path}' doesn't exist")
+        return result
 
 
 if __name__ == '__main__':
@@ -65,27 +62,12 @@ if __name__ == '__main__':
     router.addRoute("/bar/foo/baz", "/bar/foo/baz")
     router.addRoute("/bar/*/baz", "/bar/*/baz")
     router.addRoute("/bar/*/abc", "/bar/*/abc")
-    
+    print(router.path_mapping)
+
     print(router.callRoute('/bar/foo/baz'))
     print(router.callRoute('/bar/abc/baz'))
     print(router.callRoute('/bar/foo/abc'))
-
-    print(router.path_mapping)
-
-    # # test case 1: 
-    # print("Test case 1:")
-    # assert router.callRoute('/bar') == "Hello bar"    
-
-    # # test case 2: 
-    # print("Test case 2:")
-    # try:
-    #     assert router.callRoute('/random')
-    # except Exception as e:
-    #     print("Exception raised successfuly")
-
-
-
-
+    print(router.callRoute('/bar/foo/abc/sds'))
 
 
     
