@@ -26,4 +26,28 @@ class Solution:
                 node.neighbors.append(visited[neigh] if neigh in visited else dfs(neigh))
             return node
         return dfs(node)
+
+
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        def bfs(graph):
+            if graph:
+                queue  = deque()
+                visited = {}
+                queue.append(graph)
+                node = Node(graph.val)
+                visited[graph] = node
+
+                while queue:
+                    src = queue.popleft()
+                    for neigh in src.neighbors:
+                        if neigh not in visited: 
+                            node = Node(neigh.val)
+                            visited[neigh] = node
+                            queue.append(neigh)
+                        visited[src].neighbors.append(visited[neigh])
+                return visited[graph]
+        return bfs(node)
+                
                 
