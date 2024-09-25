@@ -32,13 +32,34 @@
 
 
 def decroate_cake_dp(costs):
-  num_cakes, num_colors = len(costs), len(costs[0])
-  prev_row_costs = costs[0]
-  for i in range(1, num_cakes):
-    curr_row_costs = costs[i][:]
-    for j in range(num_colors):
-      curr_row_costs[j] += min([ans[k] for k in range(num_colors) if k != j ] )
-    prev_row_costs = curr_row_costs
+    # n * k * k
+    num_cakes, num_colors = len(costs), len(costs[0])
+    prev_row_costs = costs[0]
+    for i in range(1, num_cakes):
+        curr_row_costs = costs[i]
+        for j in range(num_colors):
+            curr_row_costs[j] += min([ans[k] for k in range(num_colors) if k != j ] )
+        prev_row_costs = curr_row_costs
+  return min(prev_row_costs)
+
+
+def decroate_cake_dp(costs):
+    # n * k
+    num_cakes, num_colors = len(costs), len(costs[0])
+    prev_row_costs = costs[0]
+    for i in range(1, num_cakes):
+        curr_row_costs = costs[i]
+        least = second_least = math.inf
+        for j in range(num_colors):
+            if ans[j] < least:
+                second_least = least
+                least = ans[j]
+            elif ans[j] < second_least:
+                second_least = ans[j]
+        
+        for j in range(num_colors):
+            curr_row_costs[j] += least if ans[j] != least else second_least
+        prev_row_costs = curr_row_costs 
   return min(prev_row_costs)
 
 
