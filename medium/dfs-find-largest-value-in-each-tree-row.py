@@ -28,7 +28,7 @@ class Solution:
         return ans
             
 
-
+        # solution via bfs 
         q = deque()
         q.append((root, 0))
         res = {}
