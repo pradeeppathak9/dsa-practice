@@ -1,6 +1,6 @@
 
 
-Question:
+#####################################
 +--------------+---------+
 | Column Name  | Type    |
 +--------------+---------+
@@ -18,7 +18,7 @@ where conditions like 'DIAB1%'  or  conditions like '% DIAB1%' ;
 
 
 
-Question:
+#####################################
 +----------------+---------+
 | Column Name    | Type    |
 +----------------+---------+
@@ -40,3 +40,22 @@ Select Users.user_id, CONCAT(UPPER(SUBSTR(Users.name, 1, 1)), LOWER(SUBSTR(Users
 From Users
 ORDER BY 
 Users.user_id ASC
+
+
+#####################################
+Table: Person
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| email       | varchar |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table contains an email. The emails will not contain uppercase letters.
+ 
+
+Write a solution to delete all duplicate emails, keeping only one unique email with the smallest id.
+
+Solution:
+DELETE a1 FROM Person a1,Person a2 WHERE a1.email=a2.email AND a1.id>a2.id;
