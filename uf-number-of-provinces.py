@@ -1,5 +1,7 @@
 # https://leetcode.com/problems/number-of-provinces/
 
+
+# union find solution 
 class UnionFind(object):
     def __init__(self, parents, rank):
         self.parents = parents
@@ -40,4 +42,40 @@ class Solution:
                 if isConnected[c1][c2] == 1:
                     result -= uf.union(c1, c2)
         return result   
+
+
+
+
+
+# DFS solution 
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        n = len(isConnected)
+        adj = {i: [] for i in range(n)}
+        for i in range(n):
+            for j in range(n):
+                if i != j and isConnected[i][j] == 1:
+                    adj[i].append(j)
+                    adj[j].append(i)
         
+        visited = set()
+        def dfs(u):
+            if u in visited:
+                return
+            visited.add(u)
+            for nei in adj[u]:
+                dfs(nei)
+            return
+        
+        n_components = 0
+        for i in range(n):
+            print(i, visited)
+            if i not in visited: 
+                dfs(i)
+                n_components += 1
+        return n_components
+
+        
+
+
+
