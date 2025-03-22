@@ -16,17 +16,15 @@
 
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        candidates = sorted(candidates)
         res = []
-        def dfs(index, balance, path=[]):
-            if balance == 0:
+        candidates = sorted(candidates)
+        def dfs(idx, cur, path):
+            if cur > target: return
+            if cur == target:
                 res.append(path)
                 return
-            if index >= len(candidates) or balance < 0: 
-                return 
-            dfs(index, balance - candidates[index], [*path, candidates[index]])
-            dfs(index + 1, balance, path)
-
-        dfs(0, target, [])
+            for i in range(idx, len(candidates)):
+                dfs(i, cur+candidates[i], path+[candidates[i]])
+        dfs(0, 0, [])
         return res
         
