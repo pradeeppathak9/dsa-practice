@@ -31,3 +31,5 @@ def solution(head):
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         return solution(head)
+
+        

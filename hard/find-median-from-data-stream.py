@@ -1,11 +1,6 @@
 # https://leetcode.com/problems/find-median-from-data-stream/
 
 
-# Your MedianFinder object will be instantiated and called as such:
-# obj = MedianFinder()
-# obj.addNum(num)
-# param_2 = obj.findMedian()
-
 import heapq
 
 class MedianFinder:
@@ -36,6 +31,8 @@ class MedianFinder:
         else:
             return (-1 * self.small[0] + self.large[0]) / 2 
              
-        
-        
 
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
