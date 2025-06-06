@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/generate-parentheses/
+# https://leetcode.com/problems/reverse-linked-list/
 
 # Definition for singly-linked list.
 # class ListNode:
@@ -21,3 +21,4 @@ def solution(head):
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         return solution(head)
+        

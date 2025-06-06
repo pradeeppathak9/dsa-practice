@@ -1,6 +1,5 @@
 # https://leetcode.com/problems/design-add-and-search-words-data-structure/
 
-
 class Node: 
     def __init__(self):
         self.children = {}

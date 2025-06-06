@@ -1,5 +1,3 @@
-
-
 # https://leetcode.com/problems/number-of-provinces/
 
 
@@ -78,5 +76,6 @@ class Solution:
         return n_components
 
         
+
 
 

@@ -1,16 +1,23 @@
 # https://leetcode.com/problems/valid-palindrome/
 
-import string
-
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        valid_set =set(string.ascii_lowercase + string.digits)
-        s = [ c.lower() for c in s if c.lower() in valid_set]
-        i, j = 0, len(s) - 1
-        while j > i:
-            if s[i] != s[j]:
+        def alphaNum(c):
+            return (
+                (ord('A') <= ord(c) <= ord('Z')) or
+                (ord('a') <= ord(c) <= ord('z')) or
+                (ord('0') <= ord(c) <= ord('9'))
+            )
+
+        l, r = 0, len(s) - 1
+        while l < r:
+            while l < r and not alphaNum(s[l]):
+                l += 1
+            while r > l and not alphaNum(s[r]):
+                r -= 1
+            if s[l].lower() != s[r].lower():
                 return False
-            i += 1
-            j -= 1
+            l += 1
+            r -= 1
         return True
         
