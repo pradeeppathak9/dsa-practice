@@ -7,24 +7,13 @@
 #         self.left = left
 #         self.right = right
 
-# def dfs(root):
-#     if not root:
-#         return
-#     temp = root.left
-#     root.left = root.right
-#     root.right = temp
-#     dfs(root.left)
-#     dfs(root.right)
-
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root:
-            return root
-        root.left, root.right = root.right, root.left 
+        if root is None:
+            return
         self.invertTree(root.left)
         self.invertTree(root.right)
+        root.left, root.right = root.right, root.left
         return root
 
-
-    
         

@@ -31,18 +31,7 @@ class MinStack:
         
     def getMin(self) -> int:
         return self.min_stack[-1]
-    
-    def popMin(self) -> int:
-        temp_stack = []
-        while True: 
-            val = self.stack.pop()
-            if val != self.min_stack[-1]:
-                temp_stack.append(val)
-            else:
-                break
-        while len(temp_stack):
-            self.stack.append(temp_stack.pop())
-        return self.min_stack.pop()
+        
 
 
 # Your MinStack object will be instantiated and called as such:

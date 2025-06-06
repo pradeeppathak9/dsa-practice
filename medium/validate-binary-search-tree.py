@@ -8,34 +8,21 @@
 #         self.left = left
 #         self.right = right
 
-# def solution(root):
-#     res = []
-#     def dfs(root):
-#         if root == None:
-#             return
-#         dfs(root.left)
-#         res.append(root.val)
-#         dfs(root.right)
-#     dfs(root)
-#     for i in range(1, len(res)):
-#         if res[i] <= res[i-1]:
-#             return False
-#     return True
-
-# class Solution:
-#     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-#         return solution(root)
-
-
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        if root == None:
-            return True
-        if root.left and root.left.val >= root.val:
-            return False
-        if root.right and root.right.val <= root.val:
-            return False
+        inorder = []
+        def dfs(root):
+            if root == None:
+                return
+            dfs(root.left)
+            inorder.append(root.val)
+            dfs(root.right)
+        dfs(root)
+            
+        for i in range(1, len(inorder)):
+            if inorder[i] <= inorder[i-1]:
+                return False
 
-        return self.isValidBST(root.left) and self.isValidBST(root.right)
+        return True
         
-
+        

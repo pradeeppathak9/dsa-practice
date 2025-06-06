@@ -1,7 +1,5 @@
 # https://leetcode.com/problems/time-based-key-value-store/
 
-
-
 from collections import defaultdict
 
 class TimeMap:
