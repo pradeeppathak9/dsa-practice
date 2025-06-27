@@ -9,24 +9,21 @@
 #         self.right = right
 
 from collections import deque, defaultdict
-def solution(root):
-    res = defaultdict(list)
-    q = deque()
-    q.append((root, 0))
-    while len(q):
-        node, level = q.popleft()
-        if node:
-            res[level].append(node.val)
-            q.append((node.left, level+1))
-            q.append((node.right, level+1))
-    
-    result = []
-    for k in sorted(res.keys(), reverse=True):
-        result.append(res[k])
-    return result
-
 
 class Solution:
     def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
-        return solution(root)
+        q = deque()
+        q.append(root)
+        res = []
+        while q:
+            level_res = []
+            for i in range(len(q)):
+                node = q.popleft()
+                if node:
+                    level_res.append(node.val)
+                    q.append(node.left)
+                    q.append(node.right)
+            if level_res:
+                res.append(level_res)
+        return res[::-1]
         
