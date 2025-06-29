@@ -1,27 +1,59 @@
 # https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+from collections import defaultdict
 
-def solution(n, edges):
-    adj = { i: [] for i in range(n) }
-    for (u, v) in edges:
-        adj[u].append(v)
-        adj[v].append(u)
+def countComponents(n, edges):
+    # Build adjacency list
+    graph = defaultdict(list)
+    for u, v in edges:
+        graph[u].append(v)
+        graph[v].append(u)
 
-    visited = set()
-    def dfs(u):
-        if u in visited:
-            return
-        visited.add(u)
-        for nei in adj[u]:
-            dfs(nei)
-        return
-      
-    n_components = 0
+    visited = [False] * n
+
+    def dfs(node):
+        visited[node] = True
+        for neighbor in graph[node]:
+            if not visited[neighbor]:
+                dfs(neighbor)
+
+    count = 0
     for i in range(n):
-        print(i, visited)
-        if i not in visited: 
+        if not visited[i]:
             dfs(i)
-            n_components += 1
-    return n_components
-    
+            count += 1
+
+    return count
+
+# Example usage
+n = 5
+edges = [[0,1],[1,2],[3,4]]
+print(countComponents(n, edges))  # Output: 2
+
+
+
+def countComponents(n, edges):
+    parent = [i for i in range(n)]
+
+    def find(x):
+        while x != parent[x]:
+            parent[x] = parent[parent[x]]  # Path compression
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        root_x, root_y = find(x), find(y)
+        if root_x != root_y:
+            parent[root_y] = root_x
+
+    for u, v in edges:
+        union(u, v)
+
+    # Count unique roots
+    return len(set(find(i) for i in range(n)))
+
+# Example usage
+n = 5
+edges = [[0,1],[1,2],[3,4]]
+print(countComponents(n, edges))  # Output: 2
 
         
