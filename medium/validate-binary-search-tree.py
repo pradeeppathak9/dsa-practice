@@ -10,19 +10,21 @@
 
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        inorder = []
-        def dfs(root):
-            if root == None:
-                return
-            dfs(root.left)
-            inorder.append(root.val)
-            dfs(root.right)
-        dfs(root)
-            
-        for i in range(1, len(inorder)):
-            if inorder[i] <= inorder[i-1]:
+        def dfs(node, lower=float('-inf'), upper=float('inf')):
+            if not node:
+                return True
+            val = node.val
+            if val <= lower or val >= upper:
                 return False
-
-        return True
+            
+            # Right subtree must be greater
+            if not dfs(node.right, val, upper):
+                return False
+            # Left subtree must be less
+            if not dfs(node.left, lower, val):
+                return False
+            return True
+        return dfs(root)
+        
         
         
