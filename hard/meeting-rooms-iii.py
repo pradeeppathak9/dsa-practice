@@ -58,4 +58,4 @@ class Solution:
                 end_t, room = heapq.heappop(busyRooms)
                 heapq.heappush(busyRooms, (end_t + end - start, room))
             count[room] += 1
-    return count.index(max(count))
+        return count.index(max(count))
